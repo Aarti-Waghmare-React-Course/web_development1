@@ -1,0 +1,115 @@
+# Class Attribute
+The class attribute in HTML is used to assign one or more class names to an element. These class names can be used by CSS and JavaScript to style or manipulate elements easily.
+
+<tag class="class-name">Content</tag>
+<p class="highlight">This is a paragraph.</p>
+
+
+📘 Key Points
+✅ Assigns a class name to an HTML element
+
+✅ Can be used on any HTML element
+
+✅ Case-sensitive: Box and box are different
+
+✅ Multiple elements can share the same class
+
+✅ Multiple classes can be added using spaces:
+
+
+🎨 Usage in CSS
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}
+
+
+Example:
+<p class="highlight">Important note!</p>
+
+
+⚙️ Usage in JavaScript
+🔍 Select elements by class:
+const items = document.getElementsByClassName("highlight");
+
+for (let item of items) {
+  item.style.color = "red";
+}
+
+
+🧠 Tip
+You can combine id, class, and other selectors in CSS/JS for powerful styling and manipulation:
+
+.card.primary {
+  background-color: #f0f0f0;
+}
+
+
+💡 Best Practices
+✅ Use class names that are semantic and descriptive (e.g., button-primary, alert-warning)
+
+✅ Stick to lowercase and kebab-case (like-this) for consistency
+
+❌ Avoid using styling words like red-box, prefer error-message or alert
+
+
+🆔 HTML id Attribute Cheatsheet
+The id attribute is used to assign a unique identifier to an HTML element. It is often used in CSS, JavaScript, and bookmarks to select or manipulate that exact element.
+
+✅ Basic Syntax
+<tag id="unique-id">Content</tag>
+
+Example:
+<h1 id="main-title">Welcome to My Page</h1>
+
+
+📘 Key Points
+✅ The id must be unique within the entire HTML document
+
+✅ Used by CSS and JavaScript to target a specific element
+
+✅ id values are case-sensitive (Header ≠ header)
+
+✅ An element can have only one id
+
+✅ Often used to create HTML bookmarks (anchor links)
+
+✅ JavaScript can access it using:
+
+
+document.getElementById("unique-id");
+
+
+🎨 Usage in CSS
+
+#main-title {
+  color: blue;
+  font-size: 2rem;
+}
+
+Example:
+<h1 id="main-title">Welcome!</h1>
+
+
+⚙️ Usage in JavaScript
+
+const heading = document.getElementById("main-title");
+heading.style.color = "red";
+
+
+🔗 HTML Bookmarks Example
+
+<a href="#section2">Go to Section 2</a>
+
+<h2 id="section2">Section 2</h2>
+
+🔹 Clicking the link scrolls the page to the heading with the matching id.
+
+
+💡 Best Practices
+✅ Use meaningful and semantic names like header, footer, intro
+
+✅ Stick to lowercase, kebab-case (like-this) for consistency
+
+❌ Don’t reuse the same id more than once on a page
+
