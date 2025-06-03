@@ -5,6 +5,7 @@ import Toggle_02 from './components/01_usestate/Toggle_02';
 import ButtonDisable_03 from './components/01_usestate/ButtonDisable_03';
 import ChangeColor_04 from './components/01_usestate/ChangeColor_04';
 import TextMirror_05 from './components/01_usestate/TextMirror_05';
+import DoubleNumber_06 from './components/01_usestate/DoubleNumber_06';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
     {/* <Toggle_02/> */}
     {/* <ButtonDisable_03/> */}
     {/* <ChangeColor_04/> */}
-    <TextMirror_05/>
+    {/* <TextMirror_05/> */}
+    <DoubleNumber_06/>
     </>
   );
 }
