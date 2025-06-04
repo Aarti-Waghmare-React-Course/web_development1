@@ -7,6 +7,7 @@ import ChangeColor_04 from './components/01_usestate/ChangeColor_04';
 import TextMirror_05 from './components/01_usestate/TextMirror_05';
 import DoubleNumber_06 from './components/01_usestate/DoubleNumber_06';
 import PasswordToggle_07 from './components/01_usestate/PasswordToggle_07';
+import CharacterCounter_08 from './components/01_usestate/CharacterCounter_08';
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
     {/* <ChangeColor_04/> */}
     {/* <TextMirror_05/> */}
     {/* <DoubleNumber_06/> */}
-    <PasswordToggle_07/>
+    {/* <PasswordToggle_07/> */}
+    <CharacterCounter_08/>
     </>
   );
 }
