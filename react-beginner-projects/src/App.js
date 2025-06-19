@@ -13,6 +13,8 @@ import './App.css';
 import TitleUpdater_01 from './components/02_useEffect_hook/TitleUpdater_01';
 import OnlineStatus_02 from './components/02_useEffect_hook/OnlineStatus_02';
 import AutoCounter_03 from './components/02_useEffect_hook/AutoCounter_03';
+import FetchData_04 from './components/02_useEffect_hook/FetchData_04';
+import CharCounter_05 from './components/02_useEffect_hook/CharCounter_05';
 
 function App() {
   return (
@@ -30,7 +32,9 @@ function App() {
 
     {/* <TitleUpdater_01/> */}
     {/* <OnlineStatus_02/> */}
-    <AutoCounter_03/>
+    {/* <AutoCounter_03/> */}
+    {/* <FetchData_04/> */}
+    <CharCounter_05/>
     </>
   );
 }
