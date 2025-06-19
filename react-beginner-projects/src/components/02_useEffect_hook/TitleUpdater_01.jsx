@@ -2,9 +2,10 @@
 // Update the browser tab title with a counter.
 // Concepts: useState, useEffect with dependencies.
 
+import React from "react";
 import { useState, useEffect } from 'react';
 
-export const TitleUpdater_01 = () => {
+ const TitleUpdater_01 = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
