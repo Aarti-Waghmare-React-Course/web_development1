@@ -16,7 +16,7 @@ Whether you're just starting your development journey or brushing up on the fund
 | 📁 Folder                | 📌 Description                                                        |
 |------------------------   |-----------------------------------------------------------------------|
 | `html/`                   | Learn basic to advanced HTML tags, attributes, forms, and SEO         |
-| `pkemon app/`             | A small project work                                                  |
+| `pokemon app/`             | A small project work                                                  |
 | `react-beginner-project/` | React components, hooks (`useState`), props, and mini projects        |
 
 ---
