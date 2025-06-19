@@ -15,6 +15,8 @@ import OnlineStatus_02 from './components/02_useEffect_hook/OnlineStatus_02';
 import AutoCounter_03 from './components/02_useEffect_hook/AutoCounter_03';
 import FetchData_04 from './components/02_useEffect_hook/FetchData_04';
 import CharCounter_05 from './components/02_useEffect_hook/CharCounter_05';
+import MouseTracker_06 from './components/02_useEffect_hook/MouseTracker_06';
+import ThemeChanger_07 from './components/02_useEffect_hook/ThemeChanger_07';
 
 function App() {
   return (
@@ -34,7 +36,9 @@ function App() {
     {/* <OnlineStatus_02/> */}
     {/* <AutoCounter_03/> */}
     {/* <FetchData_04/> */}
-    <CharCounter_05/>
+    {/* <CharCounter_05/> */}
+    {/* <MouseTracker_06/> */}
+    <ThemeChanger_07/>
     </>
   );
 }
