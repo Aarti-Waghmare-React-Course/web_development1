@@ -12,6 +12,7 @@ import './App.css';
 // import LikeButton_10 from './components/01_usestate/LikeButton_10';
 import TitleUpdater_01 from './components/02_useEffect_hook/TitleUpdater_01';
 import OnlineStatus_02 from './components/02_useEffect_hook/OnlineStatus_02';
+import AutoCounter_03 from './components/02_useEffect_hook/AutoCounter_03';
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
     {/* <LikeButton_10/> */}
 
     {/* <TitleUpdater_01/> */}
-    <OnlineStatus_02/>
+    {/* <OnlineStatus_02/> */}
+    <AutoCounter_03/>
     </>
   );
 }
