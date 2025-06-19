@@ -17,6 +17,7 @@ import FetchData_04 from './components/02_useEffect_hook/FetchData_04';
 import CharCounter_05 from './components/02_useEffect_hook/CharCounter_05';
 import MouseTracker_06 from './components/02_useEffect_hook/MouseTracker_06';
 import ThemeChanger_07 from './components/02_useEffect_hook/ThemeChanger_07';
+import Clock_08 from './components/02_useEffect_hook/Clock_08';
 
 function App() {
   return (
@@ -38,7 +39,8 @@ function App() {
     {/* <FetchData_04/> */}
     {/* <CharCounter_05/> */}
     {/* <MouseTracker_06/> */}
-    <ThemeChanger_07/>
+    {/* <ThemeChanger_07/> */}
+    <Clock_08/>
     </>
   );
 }
