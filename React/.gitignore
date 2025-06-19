@@ -1,0 +1,9 @@
+# Ignore node_modules everywhere
+node_modules/
+
+# Optional extras
+.DS_Store
+.env
+build/
+dist/
+*.log
