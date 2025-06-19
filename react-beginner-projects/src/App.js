@@ -19,6 +19,7 @@ import MouseTracker_06 from './components/02_useEffect_hook/MouseTracker_06';
 import ThemeChanger_07 from './components/02_useEffect_hook/ThemeChanger_07';
 import Clock_08 from './components/02_useEffect_hook/Clock_08';
 import WindowSize_09 from './components/02_useEffect_hook/WindowSize_09';
+import ConditionalFetcher_10 from './components/02_useEffect_hook/ConditionalFetcher_10';
 
 function App() {
   return (
@@ -42,7 +43,8 @@ function App() {
     {/* <MouseTracker_06/> */}
     {/* <ThemeChanger_07/> */}
     {/* <Clock_08/> */}
-    <WindowSize_09/>
+    {/* <WindowSize_09/> */}
+    <ConditionalFetcher_10/>
     </>
   );
 }
