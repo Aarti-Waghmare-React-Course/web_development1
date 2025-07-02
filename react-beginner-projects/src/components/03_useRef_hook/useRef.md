@@ -44,7 +44,7 @@ ref.current // Access or mutate the value
 | 07 | **RenderCounterRef**                 | Count how many times a component renders                 |
 | 08 | **ImageZoomRef**                     | Zoom in on image hover using DOM manipulation            |
 | 09 | **DarkModeToggleRef**                | Toggle a dark mode theme using class changes with `ref`  |
-| 10 | **ResetFormRef** | Reset a form's values                    |
+| 10 | **ResetFormRef**                     | Reset a form's values                    |
 
 
 💬 Notes & Tips
