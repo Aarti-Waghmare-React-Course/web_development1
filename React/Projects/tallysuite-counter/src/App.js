@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { CssBaseline, Box, ThemeProvider, createTheme, Toolbar } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-function App() {
+import Navbar from './components/layout/Navbar';
+import Sidebar from './components/layout/Sidebar';
+import Footer from './components/layout/Footer';
+import BasicCounter from './components/pages/BasicCounter';
+import MemoryCounter from './components/pages/MemoryCounter';
+import HistoryCounter from './components/pages/HistoryCounter';
+import MainLayout from './components/layout/MainLayout';
+
+const App = () => {
+  const [darkMode, setDarkMode] = useState(false);
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+    },
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <MainLayout />
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

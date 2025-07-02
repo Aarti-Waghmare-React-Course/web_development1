@@ -10,16 +10,18 @@ import './App.css';
 // import CharacterCounter_08 from './components/01_usestate/CharacterCounter_08';
 // import BackgroundColor_09 from './components/01_usestate/BackgroundColor_09';
 // import LikeButton_10 from './components/01_usestate/LikeButton_10';
-import TitleUpdater_01 from './components/02_useEffect_hook/TitleUpdater_01';
-import OnlineStatus_02 from './components/02_useEffect_hook/OnlineStatus_02';
-import AutoCounter_03 from './components/02_useEffect_hook/AutoCounter_03';
-import FetchData_04 from './components/02_useEffect_hook/FetchData_04';
-import CharCounter_05 from './components/02_useEffect_hook/CharCounter_05';
-import MouseTracker_06 from './components/02_useEffect_hook/MouseTracker_06';
-import ThemeChanger_07 from './components/02_useEffect_hook/ThemeChanger_07';
-import Clock_08 from './components/02_useEffect_hook/Clock_08';
-import WindowSize_09 from './components/02_useEffect_hook/WindowSize_09';
-import ConditionalFetcher_10 from './components/02_useEffect_hook/ConditionalFetcher_10';
+// import TitleUpdater_01 from './components/02_useEffect_hook/TitleUpdater_01';
+// import OnlineStatus_02 from './components/02_useEffect_hook/OnlineStatus_02';
+// import AutoCounter_03 from './components/02_useEffect_hook/AutoCounter_03';
+// import FetchData_04 from './components/02_useEffect_hook/FetchData_04';
+// import CharCounter_05 from './components/02_useEffect_hook/CharCounter_05';
+// import MouseTracker_06 from './components/02_useEffect_hook/MouseTracker_06';
+// import ThemeChanger_07 from './components/02_useEffect_hook/ThemeChanger_07';
+// import Clock_08 from './components/02_useEffect_hook/Clock_08';
+// import WindowSize_09 from './components/02_useEffect_hook/WindowSize_09';
+// import ConditionalFetcher_10 from './components/02_useEffect_hook/ConditionalFetcher_10';
+import FocusInputOnLoad_01 from './components/03_useRef_hook/FocusInputOnLoad_01';
+import PreviousStateTracker_02 from './components/03_useRef_hook/PreviousStateTracker_02';
 
 function App() {
   return (
@@ -44,7 +46,10 @@ function App() {
     {/* <ThemeChanger_07/> */}
     {/* <Clock_08/> */}
     {/* <WindowSize_09/> */}
-    <ConditionalFetcher_10/>
+    {/* <ConditionalFetcher_10/> */}
+
+    {/* <FocusInputOnLoad_01/> */}
+    <PreviousStateTracker_02/>
     </>
   );
 }
