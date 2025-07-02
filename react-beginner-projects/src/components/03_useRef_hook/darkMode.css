@@ -1,0 +1,12 @@
+.container {
+  text-align: center;
+  padding: 40px;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.dark-mode {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
