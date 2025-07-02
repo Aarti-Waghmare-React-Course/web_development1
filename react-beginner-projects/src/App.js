@@ -29,6 +29,7 @@ import AutoScrollToBottom_06 from './components/03_useRef_hook/AutoScrollToBotto
 import RenderCounterRef_07 from './components/03_useRef_hook/RenderCounterRef_07';
 import ImageZoomRef_08 from './components/03_useRef_hook/ImageZoomRef_08';
 import DarkModeToggleRef_09 from './components/03_useRef_hook/DarkModeToggleRef_09';
+import ResetFormRef_10 from './components/03_useRef_hook/ResetFormRef_10';
 
 function App() {
   return (
@@ -63,7 +64,8 @@ function App() {
     {/* <AutoScrollToBottom_06/> */}
     {/* <RenderCounterRef_07/> */}
     {/* <ImageZoomRef_08/> */}
-    <DarkModeToggleRef_09/>
+    {/* <DarkModeToggleRef_09/> */}
+    <ResetFormRef_10/>
     </>
   );
 }
