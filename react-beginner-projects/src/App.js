@@ -23,6 +23,7 @@ import './App.css';
 import FocusInputOnLoad_01 from './components/03_useRef_hook/FocusInputOnLoad_01';
 import PreviousStateTracker_02 from './components/03_useRef_hook/PreviousStateTracker_02';
 import ClickCounterRef_03 from './components/03_useRef_hook/ClickCounterRef_03';
+import StopwatchRef_04 from './components/03_useRef_hook/StopwatchRef_04';
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
 
     {/* <FocusInputOnLoad_01/> */}
     {/* <PreviousStateTracker_02/> */}
-    <ClickCounterRef_03/>
+    {/* <ClickCounterRef_03/> */}
+    <StopwatchRef_04/>
     </>
   );
 }
