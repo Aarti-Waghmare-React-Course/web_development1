@@ -27,6 +27,7 @@ import StopwatchRef_04 from './components/03_useRef_hook/StopwatchRef_04';
 import UncontrolledInputRef_05 from './components/03_useRef_hook/UncontrolledInputRef_05';
 import AutoScrollToBottom_06 from './components/03_useRef_hook/AutoScrollToBottom_06';
 import RenderCounterRef_07 from './components/03_useRef_hook/RenderCounterRef_07';
+import ImageZoomRef_08 from './components/03_useRef_hook/ImageZoomRef_08';
 
 function App() {
   return (
@@ -59,7 +60,8 @@ function App() {
     {/* <StopwatchRef_04/> */}
     {/* <UncontrolledInputRef_05/> */}
     {/* <AutoScrollToBottom_06/> */}
-    <RenderCounterRef_07/>
+    {/* <RenderCounterRef_07/> */}
+    <ImageZoomRef_08/>
     </>
   );
 }
