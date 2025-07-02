@@ -22,6 +22,7 @@ import './App.css';
 // import ConditionalFetcher_10 from './components/02_useEffect_hook/ConditionalFetcher_10';
 import FocusInputOnLoad_01 from './components/03_useRef_hook/FocusInputOnLoad_01';
 import PreviousStateTracker_02 from './components/03_useRef_hook/PreviousStateTracker_02';
+import ClickCounterRef_03 from './components/03_useRef_hook/ClickCounterRef_03';
 
 function App() {
   return (
@@ -49,7 +50,8 @@ function App() {
     {/* <ConditionalFetcher_10/> */}
 
     {/* <FocusInputOnLoad_01/> */}
-    <PreviousStateTracker_02/>
+    {/* <PreviousStateTracker_02/> */}
+    <ClickCounterRef_03/>
     </>
   );
 }
