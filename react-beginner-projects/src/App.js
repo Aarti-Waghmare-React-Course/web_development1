@@ -25,6 +25,7 @@ import PreviousStateTracker_02 from './components/03_useRef_hook/PreviousStateTr
 import ClickCounterRef_03 from './components/03_useRef_hook/ClickCounterRef_03';
 import StopwatchRef_04 from './components/03_useRef_hook/StopwatchRef_04';
 import UncontrolledInputRef_05 from './components/03_useRef_hook/UncontrolledInputRef_05';
+import AutoScrollToBottom_06 from './components/03_useRef_hook/AutoScrollToBottom_06';
 
 function App() {
   return (
@@ -55,7 +56,8 @@ function App() {
     {/* <PreviousStateTracker_02/> */}
     {/* <ClickCounterRef_03/> */}
     {/* <StopwatchRef_04/> */}
-    <UncontrolledInputRef_05/>
+    {/* <UncontrolledInputRef_05/> */}
+    <AutoScrollToBottom_06/>
     </>
   );
 }
