@@ -40,7 +40,15 @@ const Calculator = () => {
   ];
 
   return (
-    <Paper elevation={3} sx={{ padding: 2 }}>
+    <Paper
+  elevation={3}
+  sx={{
+    padding: 2,
+    mx: "auto",
+    maxWidth: 400,
+    backgroundColor: "background.paper",
+  }}
+>
       <TextField
         fullWidth
         value={input}
