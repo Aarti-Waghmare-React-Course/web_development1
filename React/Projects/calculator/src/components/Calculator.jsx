@@ -32,23 +32,24 @@ const Calculator = () => {
   };
 
   const buttonLayout = [
-    ["⌫", "C", "/", "*"],
-    ["7", "8", "9", "-"],
-    ["4", "5", "6", "+"],
-    ["1", "2", "3", "."],
-    ["0", "", "=", ""],
+    ["⌫", "C", "/", "*", "%"],
+    ["7", "8", "9", "-", "+/-"],
+    ["4", "5", "6", "+", "."],
+    ["1", "2", "3", "", ""],
+    ["0", "=", "", "", ""],
   ];
+
 
   return (
     <Paper
-  elevation={3}
-  sx={{
-    padding: 2,
-    mx: "auto",
-    maxWidth: 400,
-    backgroundColor: "background.paper",
-  }}
->
+      elevation={3}
+      sx={{
+        padding: 2,
+        mx: "auto",
+        maxWidth: 400,
+        backgroundColor: "background.paper",
+      }}
+    >
       <TextField
         fullWidth
         value={input}
@@ -74,15 +75,27 @@ const Calculator = () => {
                     btn === "="
                       ? "success"
                       : btn === "C"
-                      ? "error"
-                      : ["+", "-", "*", "/", "."].includes(btn)
-                      ? "secondary"
-                      : "primary"
+                        ? "error"
+                        : ["+", "-", "*", "/", "."].includes(btn)
+                          ? "secondary"
+                          : "primary"
                   }
                   onClick={() => {
                     if (btn === "C") handleClear();
                     else if (btn === "⌫") handleBackspace();
                     else if (btn === "=") handleEqual();
+                    else if (btn === "+/-") {
+  if (input) {
+    const newValue = String(parseFloat(input) * -1);
+    setInput(newValue);
+  }
+} else if (btn === "%") {
+  if (input) {
+    const newValue = String(parseFloat(input) / 100);
+    setInput(newValue);
+  }
+}
+
                     else handleClick(btn);
                   }}
                   sx={{ height: "60px", fontSize: "1.2rem" }}
