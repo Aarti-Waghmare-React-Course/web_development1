@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useMemo } from "react";
+import { createTheme, ThemeProvider, CssBaseline, IconButton, Box, Typography } from "@mui/material";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Calculator from "./components/Calculator";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const App = () => {
+  const [mode, setMode] = useState("light");
+
+  const toggleColorMode = () => {
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode]
   );
-}
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box sx={{ textAlign: "center", p: 2 }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" maxWidth={500} mx="auto" mb={2}>
+          <Typography variant="h4">Calculator</Typography>
+          <IconButton onClick={toggleColorMode} color="inherit">
+            {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
+        </Box>
+        <Calculator />
+      </Box>
+    </ThemeProvider>
+  );
+};
 
 export default App;
