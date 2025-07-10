@@ -11,8 +11,10 @@ const Calculator = ({ selectedTheme, darkMode }) => {
   const [input, setInput] = useState("");
   const [memory, setMemory] = useState(null);
   const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(true);
+  const [activeKey, setActiveKey] = useState(null);
 
-  // Persist history
+  // Save and load history
   useEffect(() => {
     localStorage.setItem("calculatorHistory", JSON.stringify(history));
   }, [history]);
@@ -21,6 +23,36 @@ const Calculator = ({ selectedTheme, darkMode }) => {
     const saved = localStorage.getItem("calculatorHistory");
     if (saved) setHistory(JSON.parse(saved));
   }, []);
+
+  // Normalize special keyboard keys to match button labels
+  const normalizeKey = (key) => {
+    if (key === "Enter") return "=";
+    if (key === "Escape") return "C";
+    if (key === "Backspace") return "⌫";
+    return key;
+  };
+
+  // Keyboard input + animation
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      const { key } = event;
+      setActiveKey(key);
+      setTimeout(() => setActiveKey(null), 150);
+
+      if (!isNaN(key) || "+-*/.%".includes(key)) {
+        setInput((prev) => prev + key);
+      } else if (key === "Enter") {
+        handleEqual();
+      } else if (key === "Backspace") {
+        handleBackspace();
+      } else if (key === "Escape") {
+        handleClear();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [input]);
 
   const handleClick = (value) => setInput((prev) => prev + value);
   const handleClear = () => setInput("");
@@ -85,9 +117,19 @@ const Calculator = ({ selectedTheme, darkMode }) => {
         color: darkMode ? "#fff" : "inherit",
       }}
     >
-      {/* History */}
-      {history.length > 0 && (
-        <Box sx={{ mt: 3 }}>
+      {/* Toggle history button */}
+      <Button
+        variant="outlined"
+        size="small"
+        sx={{ mb: 1 }}
+        onClick={() => setShowHistory(!showHistory)}
+      >
+        {showHistory ? "Hide History" : "Show History"}
+      </Button>
+
+      {/* History Panel */}
+      {showHistory && history.length > 0 && (
+        <Box sx={{ mt: 2 }}>
           <Box
             sx={{
               display: "flex",
@@ -106,36 +148,30 @@ const Calculator = ({ selectedTheme, darkMode }) => {
               Clear History
             </Button>
           </Box>
-
           <Box sx={{ maxHeight: 200, overflowY: "auto" }}>
             {history.map((item, index) => (
               <Box
-  key={index}
-  sx={{
-    fontSize: "0.95rem",
-    mb: 0.5,
-    p: 1,
-    border: "1px solid",
-    borderColor: darkMode ? "#444" : "#ccc",
-    borderRadius: "6px",
-    backgroundColor: darkMode ? "#1e1e1e" : "background.default",
-    color: darkMode ? "#fff" : "inherit",
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: darkMode ? "#333" : "action.hover",
-    },
-  }}
-  onClick={() => setInput(item.result)}
->
-  {item.expression} = {item.result}
-</Box>
-
+                key={index}
+                sx={{
+                  fontSize: "0.95rem",
+                  mb: 0.5,
+                  p: 1,
+                  border: "1px solid #ccc",
+                  borderRadius: "6px",
+                  backgroundColor: "background.default",
+                  cursor: "pointer",
+                  ":hover": { backgroundColor: "action.hover" },
+                }}
+                onClick={() => setInput(item.result)}
+              >
+                {item.expression} = {item.result}
+              </Box>
             ))}
           </Box>
         </Box>
       )}
 
-      {/* Memory */}
+      {/* Memory Indicator */}
       {memory !== null && (
         <Box
           sx={{
@@ -150,43 +186,29 @@ const Calculator = ({ selectedTheme, darkMode }) => {
       )}
 
       {/* Display */}
-      {/* <TextField
+      <TextField
         fullWidth
         value={input}
         variant="outlined"
         InputProps={{
           readOnly: true,
+          sx: {
+            color: darkMode ? "#fff" : "inherit",
+          },
         }}
         sx={{
           marginBottom: 2,
-          input: { fontSize: "1.5rem", textAlign: "right" },
+          input: {
+            fontSize: "1.5rem",
+            textAlign: "right",
+            color: darkMode ? "#fff" : "inherit",
+            backgroundColor: darkMode ? "#1e1e1e" : "#fff",
+          },
+          fieldset: {
+            borderColor: darkMode ? "#555" : undefined,
+          },
         }}
-      /> */}
-
-      <TextField
-  fullWidth
-  value={input}
-  variant="outlined"
-  InputProps={{
-    readOnly: true,
-    sx: {
-      color: darkMode ? "#fff" : "inherit", // Make text visible
-    },
-  }}
-  sx={{
-    marginBottom: 2,
-    input: {
-      fontSize: "1.5rem",
-      textAlign: "right",
-      color: darkMode ? "#fff" : "inherit",
-      backgroundColor: darkMode ? "#1e1e1e" : "#fff", // dark bg if darkMode
-    },
-    fieldset: {
-      borderColor: darkMode ? "#555" : undefined, // subtle border in dark
-    },
-  }}
-/>
-
+      />
 
       {/* Buttons */}
       {buttonLayout.map((row, rowIndex) => (
@@ -218,6 +240,14 @@ const Calculator = ({ selectedTheme, darkMode }) => {
                     height: "60px",
                     fontSize: "1.2rem",
                     transition: "transform 0.1s ease-in-out",
+                    transform:
+                      normalizeKey(activeKey) === btn
+                        ? "scale(1.05)"
+                        : "scale(1)",
+                    boxShadow:
+                      normalizeKey(activeKey) === btn
+                        ? "0 0 10px rgba(0,0,0,0.3)"
+                        : "none",
                     "&:hover": {
                       transform: "scale(1.05)",
                       boxShadow: "0 0 10px rgba(0,0,0,0.2)",
