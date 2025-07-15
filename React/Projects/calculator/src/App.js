@@ -1,160 +1,105 @@
-// // import React, { useState, useMemo } from "react";
-// // import { createTheme, ThemeProvider, CssBaseline, IconButton, Box, Typography } from "@mui/material";
-// // import Brightness4Icon from "@mui/icons-material/Brightness4";
-// // import Brightness7Icon from "@mui/icons-material/Brightness7";
-// // import Calculator from "./components/Calculator";
-
-// // const App = () => {
-// //   const [mode, setMode] = useState("light");
-
-// //   const toggleColorMode = () => {
-// //     setMode((prev) => (prev === "light" ? "dark" : "light"));
-// //   };
-
-// //   const theme = useMemo(
-// //     () =>
-// //       createTheme({
-// //         palette: {
-// //           mode,
-// //         },
-// //       }),
-// //     [mode]
-// //   );
-
-// //   return (
-// //     <ThemeProvider theme={theme}>
-// //       <CssBaseline />
-// //       <Box
-// //   sx={{
-// //     textAlign: "center",
-// //     p: 2,
-// //     minHeight: "100vh",
-// //     backgroundColor: "background.default",
-// //     color: "text.primary",
-// //   }}
-// // >
-// //   <Box
-// //     sx={{
-// //       display: "flex",
-// //       justifyContent: "space-between",
-// //       alignItems: "center",
-// //       maxWidth: 400,
-// //       mx: "auto",
-// //       mb: 2,
-// //     }}
-// //   >
-// //     <Typography variant="h4">Calculator</Typography>
-// //     <IconButton onClick={toggleColorMode} color="inherit">
-// //       {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-// //     </IconButton>
-// //   </Box>
-
-// //   <Calculator />
-// // </Box>
-
-
-// //     </ThemeProvider>
-// //   );
-// // };
-
-// // export default App;
-
-// import React from "react";
-// import { ThemeColorProvider } from "./components/ThemeContext"
-// import Calculator from "./components/Calculator";
-// import { CssBaseline, Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-// import { useThemeColor } from "./components/ThemeContext";
-
-// const AppContent = () => {
-//   const { colorMode, setColorMode } = useThemeColor();
-
-//   return (
-//     <Box sx={{ p: 2 }}>
-//       <FormControl size="small" sx={{ mb: 2 }}>
-//         <InputLabel>Theme</InputLabel>
-//         <Select
-//           value={colorMode}
-//           label="Theme"
-//           onChange={(e) => setColorMode(e.target.value)}
-//         >
-//           <MenuItem value="blue">Blue</MenuItem>
-//           <MenuItem value="red">Red</MenuItem>
-//           <MenuItem value="green">Green</MenuItem>
-//         </Select>
-//       </FormControl>
-
-//       <Calculator />
-//     </Box>
-//   );
-// };
-
-// function App() {
-//   return (
-//     <ThemeColorProvider>
-//       <CssBaseline />
-//       <AppContent />
-//     </ThemeColorProvider>
-//   );
-// }
-
-// export default App;
-
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Box,
-  IconButton,
+  ThemeProvider,
+  createTheme,
+  CssBaseline,
   FormControl,
   InputLabel,
-  MenuItem,
   Select,
+  MenuItem,
+  Switch,
+  Box,
+  Typography,
 } from "@mui/material";
-import Brightness4 from "@mui/icons-material/Brightness4";
-import Brightness7 from "@mui/icons-material/Brightness7";
 import Calculator from "./components/Calculator";
 
 const App = () => {
-  const [selectedTheme, setSelectedTheme] = React.useState("Blue");
-  const [darkMode, setDarkMode] = React.useState(false);
+  const [selectedTheme, setSelectedTheme] = useState("Blue");
+  const [darkMode, setDarkMode] = useState(false);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+  // Save preferences
+  useEffect(() => {
+    localStorage.setItem("theme", selectedTheme);
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [selectedTheme, darkMode]);
+
+  // Load preferences
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    const storedDark = localStorage.getItem("darkMode");
+
+    if (storedTheme) setSelectedTheme(storedTheme);
+    if (storedDark) setDarkMode(JSON.parse(storedDark));
+  }, []);
+
+  const themeColors = {
+    Blue: {
+      primary: { main: "#1976d2" },
+      secondary: { main: "#1565c0" },
+    },
+    Red: {
+      primary: { main: "#d32f2f" },
+      secondary: { main: "#b71c1c" },
+    },
+    Green: {
+      primary: { main: "#388e3c" },
+      secondary: { main: "#2e7d32" },
+    },
   };
 
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      ...themeColors[selectedTheme],
+    },
+  });
+
   return (
-    <Box sx={{ p: 2 }}>
-      {/* Top Control Panel */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end", // aligns to top-right
-          gap: 2,
-          mb: 2,
-        }}
-      >
-        {/* Theme Dropdown */}
-        <FormControl size="small">
-          <InputLabel>Theme</InputLabel>
-          <Select
-            value={selectedTheme}
-            onChange={(e) => setSelectedTheme(e.target.value)}
-            label="Theme"
-          >
-            <MenuItem value="Blue">Blue</MenuItem>
-            <MenuItem value="Red">Red</MenuItem>
-            <MenuItem value="Green">Green</MenuItem>
-          </Select>
-        </FormControl>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-        {/* Dark Mode Toggle */}
-        <IconButton onClick={toggleDarkMode} color="inherit">
-          {darkMode ? <Brightness7 /> : <Brightness4 />}
-        </IconButton>
+      <Box sx={{ p: 3, textAlign: "center" }}>
+        <Typography variant="h4" gutterBottom>
+          TallySuite Calculator
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 2,
+            mb: 3,
+            flexWrap: "wrap",
+          }}
+        >
+          <FormControl size="small">
+            <InputLabel>Theme</InputLabel>
+            <Select
+              value={selectedTheme}
+              onChange={(e) => setSelectedTheme(e.target.value)}
+              label="Theme"
+            >
+              <MenuItem value="Blue">Blue</MenuItem>
+              <MenuItem value="Red">Red</MenuItem>
+              <MenuItem value="Green">Green</MenuItem>
+            </Select>
+          </FormControl>
+
+          <Box display="flex" alignItems="center">
+            <Typography variant="body1" sx={{ mr: 1 }}>
+              Dark Mode
+            </Typography>
+            <Switch
+              checked={darkMode}
+              onChange={() => setDarkMode(!darkMode)}
+            />
+          </Box>
+        </Box>
+
+        {/* Calculator Component */}
+        <Calculator selectedTheme={selectedTheme} darkMode={darkMode} />
       </Box>
-
-      {/* Calculator */}
-      <Calculator selectedTheme={selectedTheme} darkMode={darkMode} />
-    </Box>
+    </ThemeProvider>
   );
 };
 

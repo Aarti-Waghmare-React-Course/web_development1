@@ -14,25 +14,35 @@ const Calculator = ({ selectedTheme, darkMode }) => {
   const [showHistory, setShowHistory] = useState(true);
   const [activeKey, setActiveKey] = useState(null);
 
-  // Save and load history
+  // Functions must come before useEffect
+  const handleClick = (value) => setInput((prev) => prev + value);
+  const handleClear = () => setInput("");
+  const handleBackspace = () => setInput((prev) => prev.slice(0, -1));
+
+  const handleEqual = () => {
+    try {
+      // Safer alternative to eval
+      const result = Function('"use strict";return (' + input + ')')();
+      const newResult = result.toString();
+      setInput(newResult);
+      setHistory((prev) => [...prev, { expression: input, result: newResult }]);
+    } catch {
+      setInput("Error");
+    }
+  };
+
+  // Save history to localStorage
   useEffect(() => {
     localStorage.setItem("calculatorHistory", JSON.stringify(history));
   }, [history]);
 
+  // Load history from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("calculatorHistory");
     if (saved) setHistory(JSON.parse(saved));
   }, []);
 
-  // Normalize special keyboard keys to match button labels
-  const normalizeKey = (key) => {
-    if (key === "Enter") return "=";
-    if (key === "Escape") return "C";
-    if (key === "Backspace") return "⌫";
-    return key;
-  };
-
-  // Keyboard input + animation
+  // Keyboard handler
   useEffect(() => {
     const handleKeyPress = (event) => {
       const { key } = event;
@@ -52,22 +62,7 @@ const Calculator = ({ selectedTheme, darkMode }) => {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [input]);
-
-  const handleClick = (value) => setInput((prev) => prev + value);
-  const handleClear = () => setInput("");
-  const handleBackspace = () => setInput((prev) => prev.slice(0, -1));
-
-  const handleEqual = () => {
-    try {
-      const result = eval(input);
-      const newResult = result.toString();
-      setInput(newResult);
-      setHistory((prev) => [...prev, { expression: input, result: newResult }]);
-    } catch {
-      setInput("Error");
-    }
-  };
+  }, [input, handleEqual, handleBackspace, handleClear]);
 
   const buttonLayout = [
     ["M+", "MR", "MC", "⌫", "C"],
@@ -95,56 +90,30 @@ const Calculator = ({ selectedTheme, darkMode }) => {
   const getBgColor = () => {
     if (darkMode) return "#121212";
     switch (selectedTheme) {
-      case "Red":
-        return "#fff5f5";
-      case "Green":
-        return "#f5fff5";
-      case "Blue":
-        return "#f5f9ff";
-      default:
-        return "background.paper";
+      case "Red": return "#fff5f5";
+      case "Green": return "#f5fff5";
+      case "Blue": return "#f5f9ff";
+      default: return "background.paper";
     }
   };
 
-  return (
-    <Paper
-      elevation={3}
-      sx={{
-        padding: 2,
-        mx: "auto",
-        maxWidth: 400,
-        backgroundColor: getBgColor(),
-        color: darkMode ? "#fff" : "inherit",
-      }}
-    >
-      {/* Toggle history button */}
-      <Button
-        variant="outlined"
-        size="small"
-        sx={{ mb: 1 }}
-        onClick={() => setShowHistory(!showHistory)}
-      >
-        {showHistory ? "Hide History" : "Show History"}
-      </Button>
+  const normalizeKey = (key) => key === "Enter" ? "=" : key === "Backspace" ? "⌫" : key;
 
-      {/* History Panel */}
+  return (
+    <Paper elevation={3} sx={{
+      padding: 2,
+      mx: "auto",
+      maxWidth: 400,
+      backgroundColor: getBgColor(),
+      color: darkMode ? "#fff" : "inherit",
+    }}>
+
+      {/* History Section */}
       {showHistory && history.length > 0 && (
-        <Box sx={{ mt: 2 }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mb: 1,
-            }}
-          >
+        <Box sx={{ mt: 3 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
             <Box sx={{ fontWeight: "bold" }}>History</Box>
-            <Button
-              variant="outlined"
-              size="small"
-              color="error"
-              onClick={() => setHistory([])}
-            >
+            <Button variant="outlined" size="small" color="error" onClick={() => setHistory([])}>
               Clear History
             </Button>
           </Box>
@@ -171,35 +140,36 @@ const Calculator = ({ selectedTheme, darkMode }) => {
         </Box>
       )}
 
-      {/* Memory Indicator */}
+      {/* Memory Display */}
       {memory !== null && (
-        <Box
-          sx={{
-            textAlign: "right",
-            fontSize: "0.9rem",
-            color: darkMode ? "#aaa" : "gray",
-            mb: 1,
-          }}
-        >
+        <Box sx={{ textAlign: "right", fontSize: "0.9rem", color: darkMode ? "#aaa" : "gray", mb: 1 }}>
           M = {memory}
         </Box>
       )}
 
-      {/* Display */}
+      {/* Toggle History Button */}
+      <Button
+        variant="outlined"
+        size="small"
+        sx={{ mb: 1 }}
+        onClick={() => setShowHistory(!showHistory)}
+      >
+        {showHistory ? "Hide History" : "Show History"}
+      </Button>
+
+      {/* Input Field */}
       <TextField
         fullWidth
         value={input}
         variant="outlined"
         InputProps={{
           readOnly: true,
-          sx: {
-            color: darkMode ? "#fff" : "inherit",
-          },
+          sx: { color: darkMode ? "#fff" : "inherit" },
         }}
         sx={{
           marginBottom: 2,
           input: {
-            fontSize: "1.5rem",
+            fontSize: { xs: "1.2rem", sm: "1.5rem" },
             textAlign: "right",
             color: darkMode ? "#fff" : "inherit",
             backgroundColor: darkMode ? "#1e1e1e" : "#fff",
@@ -214,7 +184,7 @@ const Calculator = ({ selectedTheme, darkMode }) => {
       {buttonLayout.map((row, rowIndex) => (
         <Grid container spacing={1} key={rowIndex} sx={{ marginBottom: 1 }}>
           {row.map((btn, colIndex) => (
-            <Grid item xs={3} key={colIndex}>
+            <Grid item xs={2.4} key={colIndex}>
               {btn ? (
                 <Button
                   fullWidth
@@ -234,16 +204,15 @@ const Calculator = ({ selectedTheme, darkMode }) => {
                       if (memory !== null) setInput(memory.toString());
                     } else if (btn === "MC") {
                       setMemory(null);
-                    } else handleClick(btn);
+                    } else {
+                      handleClick(btn);
+                    }
                   }}
                   sx={{
                     height: "60px",
                     fontSize: "1.2rem",
                     transition: "transform 0.1s ease-in-out",
-                    transform:
-                      normalizeKey(activeKey) === btn
-                        ? "scale(1.05)"
-                        : "scale(1)",
+                    transform: normalizeKey(activeKey) === btn ? "scale(1.05)" : "scale(1)",
                     boxShadow:
                       normalizeKey(activeKey) === btn
                         ? "0 0 10px rgba(0,0,0,0.3)"
