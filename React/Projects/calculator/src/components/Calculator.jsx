@@ -5,7 +5,6 @@ import {
   TextField,
   Paper,
   Box,
-  Container,
 } from "@mui/material";
 
 const Calculator = ({ selectedTheme, darkMode }) => {
@@ -15,6 +14,35 @@ const Calculator = ({ selectedTheme, darkMode }) => {
   const [showHistory, setShowHistory] = useState(true);
   const [activeKey, setActiveKey] = useState(null);
 
+  // PWA install prompt state
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallButton(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("PWA installed");
+        }
+        setDeferredPrompt(null);
+        setShowInstallButton(false);
+      });
+    }
+  };
+
+  // Core calculator functions
   const handleClick = (value) => setInput((prev) => prev + value);
   const handleClear = () => setInput("");
   const handleBackspace = () => setInput((prev) => prev.slice(0, -1));
@@ -96,18 +124,17 @@ const Calculator = ({ selectedTheme, darkMode }) => {
   const normalizeKey = (key) => key === "Enter" ? "=" : key === "Backspace" ? "⌫" : key;
 
   return (
-    <Container maxWidth="xs" sx={{ pt: 4, pb: 6, px: 1 }}>
-      <Paper
-        elevation={3}
-        sx={{
-          padding: 2,
-          backgroundColor: getBgColor(),
-          color: darkMode ? "#fff" : "inherit",
-        }}
-      >
-        {/* History Section */}
+    <>
+      <Paper elevation={3} sx={{
+        padding: 2,
+        mx: "auto",
+        maxWidth: 400,
+        backgroundColor: getBgColor(),
+        color: darkMode ? "#fff" : "inherit",
+      }}>
+        {/* History */}
         {showHistory && history.length > 0 && (
-          <Box sx={{ mt: 2 }}>
+          <Box sx={{ mt: 3 }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
               <Box sx={{ fontWeight: "bold" }}>History</Box>
               <Button variant="outlined" size="small" color="error" onClick={() => setHistory([])}>
@@ -137,14 +164,14 @@ const Calculator = ({ selectedTheme, darkMode }) => {
           </Box>
         )}
 
-        {/* Memory Display */}
+        {/* Memory */}
         {memory !== null && (
           <Box sx={{ textAlign: "right", fontSize: "0.9rem", color: darkMode ? "#aaa" : "gray", mb: 1 }}>
             M = {memory}
           </Box>
         )}
 
-        {/* Toggle History */}
+        {/* History Toggle */}
         <Button
           variant="outlined"
           size="small"
@@ -154,7 +181,7 @@ const Calculator = ({ selectedTheme, darkMode }) => {
           {showHistory ? "Hide History" : "Show History"}
         </Button>
 
-        {/* Input */}
+        {/* Input Field */}
         <TextField
           fullWidth
           value={input}
@@ -177,7 +204,7 @@ const Calculator = ({ selectedTheme, darkMode }) => {
           }}
         />
 
-        {/* Buttons Grid */}
+        {/* Calculator Buttons */}
         {buttonLayout.map((row, rowIndex) => (
           <Grid container spacing={1} key={rowIndex} sx={{ marginBottom: 1 }}>
             {row.map((btn, colIndex) => (
@@ -210,10 +237,7 @@ const Calculator = ({ selectedTheme, darkMode }) => {
                       fontSize: "1.2rem",
                       transition: "transform 0.1s ease-in-out",
                       transform: normalizeKey(activeKey) === btn ? "scale(1.05)" : "scale(1)",
-                      boxShadow:
-                        normalizeKey(activeKey) === btn
-                          ? "0 0 10px rgba(0,0,0,0.3)"
-                          : "none",
+                      boxShadow: normalizeKey(activeKey) === btn ? "0 0 10px rgba(0,0,0,0.3)" : "none",
                       "&:hover": {
                         transform: "scale(1.05)",
                         boxShadow: "0 0 10px rgba(0,0,0,0.2)",
@@ -230,7 +254,30 @@ const Calculator = ({ selectedTheme, darkMode }) => {
           </Grid>
         ))}
       </Paper>
-    </Container>
+
+      {/* Custom Install Button (PWA) */}
+      {showInstallButton && (
+        <button
+          onClick={handleInstallClick}
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            padding: "10px 16px",
+            fontSize: "1rem",
+            background: "#1976d2",
+            color: "#fff",
+            border: "none",
+            borderRadius: "10px",
+            cursor: "pointer",
+            boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+            zIndex: 1000,
+          }}
+        >
+          📲 Install Calculator
+        </button>
+      )}
+    </>
   );
 };
 
