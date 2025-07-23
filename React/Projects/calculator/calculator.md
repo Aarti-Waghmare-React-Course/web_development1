@@ -5,56 +5,61 @@ This app supports basic arithmetic, calculation history, keyboard input, respons
 
 ---
 
-
 ## ✨ Features
 
-- ✅ **Basic Operations**: Addition, Subtraction, Multiplication, Division
-- 🧠 **Evaluate Input**: Dynamic expression parsing and calculation
-- 📜 **History Panel**: See all your past calculations 
-- ⌨️ **Keyboard Input Support**: Type using your keyboard like a real calculator
-- 📱 **Responsive Design**: Mobile and desktop friendly
-- 🌓 **Dark Mode Ready** : With toggle mode
-- ♻️ **Clear Button**: Reset input and result
+- ✅ **Basic Operations**: Addition, Subtraction, Multiplication, Division  
+- 🧠 **Evaluate Input**: Dynamic expression parsing and calculation  
+- 📜 **History Panel**: See all your past calculations  
+- ⌨️ **Keyboard Input Support**: Type using your keyboard like a real calculator  
+- 📱 **Responsive Design**: Mobile and desktop friendly  
+- 🌓 **Dark Mode Ready** : With toggle mode  
+- ♻️ **Clear Button**: Reset input and result  
 - 🔙 **Backspace Button**: Correct mistakes easily
 
 ---
 
-
 ## 🧩 Built With
 
-- [React JS](https://reactjs.org/)
-- [Material UI](https://mui.com/)
-- [React Hooks](https://reactjs.org/docs/hooks-intro.html)
+- [React JS](https://reactjs.org/)  
+- [Material UI](https://mui.com/)  
+- [React Hooks](https://reactjs.org/docs/hooks-intro.html)  
 - `useState`, `useEffect`, `useRef`
 
 ---
 
-
 ## ⚙️ Getting Started
 
 1. Clone the repo  
-   git clone https://github.com/Aarti-Waghmare-React-Course/web_development1/tree/main/React/Projects/calculator
+   `git clone https://github.com/Aarti-Waghmare-React-Course/web_development1/tree/main/React/Projects/calculator`
 
-2. Install Dependencies
-   npm install
+2. Install Dependencies  
+   `npm install`
 
-3. Start the app locally
-   npm start
+3. Start the app locally  
+   `npm start`
 
+> 🔧 _PWA functionality and responsive layout are fully integrated into the project. For the best experience, we recommend cloning the repo and running it locally. Live deployment enhancements are in progress._
 
- 🙋‍♀️ Author
-Aarti Waghmare
-Frontend Developer • React Enthusiast
+---
+
+## 🙋‍♀️ Author
+
+**Aarti Waghmare**  
+Frontend Developer • React Enthusiast  
 🌐 GitHub
 
+---
 
-🏁 License
+## 🏁 License
+
 This project is licensed under the MIT License.
 
+---
 
-📢 Feedback
+## 📢 Feedback
+
 Have suggestions or ideas? Open an issue or create a pull request!
 
+---
 
-⭐ Don't forget to star the repo if you liked it!
-
+⭐ Don't forget to **star** the repo if you liked it!
