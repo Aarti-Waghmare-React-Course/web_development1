@@ -5,6 +5,8 @@ import {
   TextField,
   Paper,
   Box,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 
 const Calculator = ({ selectedTheme, darkMode }) => {
@@ -13,10 +15,11 @@ const Calculator = ({ selectedTheme, darkMode }) => {
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(true);
   const [activeKey, setActiveKey] = useState(null);
-
-  // PWA install prompt state
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const handler = (e) => {
@@ -32,17 +35,13 @@ const Calculator = ({ selectedTheme, darkMode }) => {
   const handleInstallClick = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === "accepted") {
-          console.log("PWA installed");
-        }
+      deferredPrompt.userChoice.then(() => {
         setDeferredPrompt(null);
         setShowInstallButton(false);
       });
     }
   };
 
-  // Core calculator functions
   const handleClick = (value) => setInput((prev) => prev + value);
   const handleClear = () => setInput("");
   const handleBackspace = () => setInput((prev) => prev.slice(0, -1));
@@ -125,35 +124,42 @@ const Calculator = ({ selectedTheme, darkMode }) => {
 
   return (
     <>
-      <Paper elevation={3} sx={{
-        padding: 2,
-        mx: "auto",
-        maxWidth: 400,
-        backgroundColor: getBgColor(),
-        color: darkMode ? "#fff" : "inherit",
-      }}>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: 2,
+          mx: "auto",
+          my: 2,
+          maxWidth: 400,
+          backgroundColor: getBgColor(),
+          color: darkMode ? "#fff" : "inherit",
+          minHeight: "90vh",
+        }}
+      >
         {/* History */}
         {showHistory && history.length > 0 && (
-          <Box sx={{ mt: 3 }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+          <Box sx={{ mt: 2 }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}
+            >
               <Box sx={{ fontWeight: "bold" }}>History</Box>
               <Button variant="outlined" size="small" color="error" onClick={() => setHistory([])}>
-                Clear History
+                Clear
               </Button>
             </Box>
-            <Box sx={{ maxHeight: 200, overflowY: "auto" }}>
+            <Box sx={{ maxHeight: 150, overflowY: "auto" }}>
               {history.map((item, index) => (
                 <Box
                   key={index}
                   sx={{
-                    fontSize: "0.95rem",
+                    fontSize: "0.9rem",
                     mb: 0.5,
                     p: 1,
                     border: "1px solid #ccc",
                     borderRadius: "6px",
-                    backgroundColor: "background.default",
+                    backgroundColor: darkMode ? "#1e1e1e" : "#fafafa",
                     cursor: "pointer",
-                    ":hover": { backgroundColor: "action.hover" },
+                    ":hover": { backgroundColor: darkMode ? "#2a2a2a" : "#f0f0f0" },
                   }}
                   onClick={() => setInput(item.result)}
                 >
@@ -164,14 +170,12 @@ const Calculator = ({ selectedTheme, darkMode }) => {
           </Box>
         )}
 
-        {/* Memory */}
         {memory !== null && (
           <Box sx={{ textAlign: "right", fontSize: "0.9rem", color: darkMode ? "#aaa" : "gray", mb: 1 }}>
             M = {memory}
           </Box>
         )}
 
-        {/* History Toggle */}
         <Button
           variant="outlined"
           size="small"
@@ -181,7 +185,6 @@ const Calculator = ({ selectedTheme, darkMode }) => {
           {showHistory ? "Hide History" : "Show History"}
         </Button>
 
-        {/* Input Field */}
         <TextField
           fullWidth
           value={input}
@@ -191,9 +194,9 @@ const Calculator = ({ selectedTheme, darkMode }) => {
             sx: { color: darkMode ? "#fff" : "inherit" },
           }}
           sx={{
-            marginBottom: 2,
+            mb: 2,
             input: {
-              fontSize: { xs: "1.2rem", sm: "1.5rem" },
+              fontSize: isMobile ? "1.2rem" : "1.5rem",
               textAlign: "right",
               color: darkMode ? "#fff" : "inherit",
               backgroundColor: darkMode ? "#1e1e1e" : "#fff",
@@ -204,11 +207,10 @@ const Calculator = ({ selectedTheme, darkMode }) => {
           }}
         />
 
-        {/* Calculator Buttons */}
         {buttonLayout.map((row, rowIndex) => (
-          <Grid container spacing={1} key={rowIndex} sx={{ marginBottom: 1 }}>
+          <Grid container spacing={1} key={rowIndex} sx={{ mb: 1 }}>
             {row.map((btn, colIndex) => (
-              <Grid item xs={2.4} key={colIndex}>
+              <Grid item xs={2.4} sm={2.4} key={colIndex}>
                 {btn ? (
                   <Button
                     fullWidth
@@ -233,21 +235,16 @@ const Calculator = ({ selectedTheme, darkMode }) => {
                       }
                     }}
                     sx={{
-                      height: "60px",
-                      fontSize: "1.2rem",
-                      transition: "transform 0.1s ease-in-out",
+                      height: isMobile ? "50px" : "60px",
+                      fontSize: isMobile ? "1rem" : "1.2rem",
                       transform: normalizeKey(activeKey) === btn ? "scale(1.05)" : "scale(1)",
-                      boxShadow: normalizeKey(activeKey) === btn ? "0 0 10px rgba(0,0,0,0.3)" : "none",
-                      "&:hover": {
-                        transform: "scale(1.05)",
-                        boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-                      },
+                      transition: "transform 0.1s ease-in-out",
                     }}
                   >
                     {btn}
                   </Button>
                 ) : (
-                  <Box sx={{ height: "60px" }} />
+                  <Box sx={{ height: isMobile ? "50px" : "60px" }} />
                 )}
               </Grid>
             ))}
@@ -255,7 +252,6 @@ const Calculator = ({ selectedTheme, darkMode }) => {
         ))}
       </Paper>
 
-      {/* Custom Install Button (PWA) */}
       {showInstallButton && (
         <button
           onClick={handleInstallClick}
@@ -270,7 +266,6 @@ const Calculator = ({ selectedTheme, darkMode }) => {
             border: "none",
             borderRadius: "10px",
             cursor: "pointer",
-            boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
             zIndex: 1000,
           }}
         >
